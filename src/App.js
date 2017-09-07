@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Words from './Components/Words';
+import AddWord from './Components/AddWord';
+import uuid from 'uuid';
 
 class App extends Component {
   constructor(){
@@ -15,13 +17,28 @@ class App extends Component {
     this.setState({
       words: [
         {
+          id: uuid.v4(),
           text: 'Hello'
         },
         {
+          id: uuid.v4(),
           text: 'World'
         }
       ]
     })
+  }
+
+  handleAddWord = function(newWord){
+    let words = this.state.words;
+    words.push(newWord);
+    this.setState({words:words});
+  }
+
+  handleDelete(id){
+    let words = this.state.words;
+    let index = words.findIndex(x=>x.id === id);
+    words.splice(index,1);
+    this.setState({words:words});
   }
 
   render() {
@@ -36,7 +53,8 @@ class App extends Component {
             To get started, edit <code>src/App.js</code> and save to reload.
           </p>
         </div>
-        <Words words={this.state.words}/>
+        <AddWord addWord={this.handleAddWord.bind(this)}/>
+        <Words words={this.state.words} onDelete={this.handleDelete.bind(this)}/>
       </div>
     );
   }
