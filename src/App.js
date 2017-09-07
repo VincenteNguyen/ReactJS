@@ -4,16 +4,19 @@ import './App.css';
 import Words from './Components/Words';
 import AddWord from './Components/AddWord';
 import uuid from 'uuid';
+import $ from 'jquery';
+import Todos from './Components/Todos';
 
 class App extends Component {
   constructor(){
     super();
     this.state = {
-      words: []
+      words: [],
+      todos: []
     }
   }
 
-  componentWillMount(){
+  getWords(){
     this.setState({
       words: [
         {
@@ -25,7 +28,32 @@ class App extends Component {
           text: 'World'
         }
       ]
-    })
+    });
+  }
+
+  getTodos(){
+    $.ajax({
+      url: 'https://jsonplaceholder.typicode.com/todos',
+      dataType: 'json',
+      cache: false,
+      success: function(data){
+        this.setState({todos:data}, function(){
+          console.log(this.state);
+        });
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.log(err);
+      }
+    });
+  }
+
+  componentWillMount(){
+    this.getWords();
+    this.getTodos();
+  }
+
+  componentDidMount(){
+    this.getTodos();
   }
 
   handleAddWord = function(newWord){
@@ -55,6 +83,8 @@ class App extends Component {
         </div>
         <AddWord addWord={this.handleAddWord.bind(this)}/>
         <Words words={this.state.words} onDelete={this.handleDelete.bind(this)}/>
+        <hr />
+        <Todos todos={this.state.todos} />
       </div>
     );
   }
