@@ -7,14 +7,21 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
+      words: []
+    }
+  }
+
+  componentWillMount(){
+    this.setState({
       words: [
-      {
-        text: 'Hello'
-      },
-      {
-        text: 'World'
-      }
-    ]}
+        {
+          text: 'Hello'
+        },
+        {
+          text: 'World'
+        }
+      ]
+    })
   }
 
   render() {
