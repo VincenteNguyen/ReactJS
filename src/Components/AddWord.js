@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
+import PropTypes from 'prop-types';
 
 class AddWord extends Component {
   constructor(){
@@ -40,6 +41,10 @@ class AddWord extends Component {
       </div>
     );
   }
+}
+
+AddWord.propTypes = {
+  addWord: PropTypes.func
 }
 
 export default AddWord;

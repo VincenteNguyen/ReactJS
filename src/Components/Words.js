@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import WordItem from './WordItem';
+import PropTypes from 'prop-types';
 
 class Words extends Component {
     deleteWord(id){
@@ -22,6 +23,11 @@ class Words extends Component {
       </div>
     );
   }
+}
+
+Words.propTypes = {
+    words: PropTypes.array,
+    onDelete: PropTypes.func
 }
 
 export default Words;
